@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Get worksheet slides and video lessons" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>ApexLnx</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
+    <!-- main css -->
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .feature-wrapper {
+        border: solid #1daeec 3px;
+        border-radius: 12px;
+        max-width: 275px;
+        display: block;
+        margin: 1rem auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      .feature-wrapper:hover {
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+          0 10px 10px rgba(0, 0, 0, 0.22);
+      }
+
+      .feature-pic {
+        margin: 0 auto;
+        display: block;
+      }
+
+      .feature-title {
+        text-align: center;
+        font-family: "Montserrat";
+        font-weight: bold;
+        color: #333;
+      }
+
+      #play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .stroke-dotted {
+        opacity: 0;
+        stroke-dasharray: 4, 5;
+        stroke-width: 1px;
+        transform-origin: 50% 50%;
+        animation: spin 4s infinite linear;
+        transition: opacity 1s ease, stroke-width 1s ease;
+      }
+      .stroke-solid {
+        stroke-dashoffset: 0;
+        stroke-dasharray: 300;
+        stroke-width: 4px;
+        transition: stroke-dashoffset 1s ease, opacity 1s ease;
+      }
+      .icon {
+        transform-origin: 50% 50%;
+        transition: transform 200ms ease-out;
+      }
+      #play:hover .stroke-dotted {
+        stroke-width: 4px;
+        opacity: 1;
+      }
+      #play:hover .stroke-solid {
+        opacity: 0;
+        stroke-dashoffset: 300;
+      }
+      #play:hover .icon {
+        transform: scale(1.05);
+      }
+
+      .Modal-overlay {
+        display: none;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        z-index: 9000;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+      }
+      .Modal-box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+      .Modal-box > .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        max-width: 177.78vh;
+        height: 56.25vw;
+        max-height: 100vh;
+        margin: auto;
+        overflow: hidden;
+      }
+      .Modal-box > .video-container > iframe,
+      .Modal-box > .video-container > object,
+      .Modal-box > .video-container > embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .Modal-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 9001;
+        padding: 5px 10px;
+        color: #fff;
+        font-size: 16px;
+        line-height: 1;
+        text-transform: uppercase;
+        background-color: rgba(0, 0, 0, 0.85);
+      }
+      .Modal-cancel-overflow {
+        overflow: hidden;
+      }
+
+      .wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .feature-subtitle {
+        text-align: center;
+      }
+
+      .pic-wrapper {
+        position: relative;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--================ Start Header Menu Area =================-->
+    <header class="header_area">
+      <div class="main_menu">
+        <div class="search_input" id="search_input_box" style="display: none;">
+          <div class="container">
+            <form class="d-flex justify-content-between" method="" action="">
+              <input
+                type="text"
+                class="form-control"
+                id="search_input"
+                placeholder="Search Here"
+              />
+              <button type="submit" class="btn"></button>
+              <span
+                class="ti-close"
+                id="close_search"
+                title="Close Search"
+              ></span>
+            </form>
+          </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <a class="navbar-brand logo_h" href="index.html"
+              ><img src="img/logo.png" alt=""
+            /></a>
+            <button
+              class="navbar-toggler collapsed"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon-bar"></span> <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <div
+              class="navbar-collapse offset collapse"
+              id="navbarSupportedContent"
+            >
+              <ul class="nav navbar-nav menu_nav ml-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#pricing">Pricing</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Curriculum</a>
+                </li>
+                <li class="">
+                  <a href="register.html" class="primary-btn2 mb-3 mb-sm-0 mt-2"
+                    >Sign up</a
+                  >
+                </li>
+                <li class="">
+                  <a href="register.html" class="primary-btn ml-sm-3 ml-0 mt-2"
+                    >Sign in</a
+                  >
+                </li>
+
+                <li class="nav-item submenu dropdown" style="display: none;">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Pages</a
+                  >
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" href="courses.html">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="course-details.html"
+                        >Course Details</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="elements.html">Elements</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item submenu dropdown" style="display: none;">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Blog</a
+                  >
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <a class="nav-link" href="blog.html">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="single-blog.html"
+                        >Blog Details</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item" style="display: none;">
+                  <a class="nav-link" href="contact.html">Contact</a>
+                </li>
+                <li class="nav-item" style="display: none;">
+                  <a href="#" class="nav-link search" id="search">
+                    <i class="ti-search"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--================ End Header Menu Area =================-->
+
+    <!--================ Start Home Banner Area =================-->
+    <section class="home_banner_area">
+      <div class="banner_inner">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="banner_content text-center">
+                <p class="text-uppercase">
+                  Easy learning from the comfort of your home
+                </p>
+                <h2 class="text-uppercase mt-4 mb-5">
+                  A good education starts at home
+                </h2>
+                <div>
+                  <a href="#" class="primary-btn2 mb-3 mb-sm-0">Get Started</a>
+                  <a href="#" class="primary-btn ml-sm-3 ml-0">Learn More</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================ End Home Banner Area =================-->
+
+    <!--================ Start worksheet slides=================-->
+    <section class="feature_area section_gap_top popular_courses">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="main_title">
+              <h2 class="mb-3">Rich Engaging Lessons</h2>
+              <p>
+                Experience Apexlnx worksheets and activities with our daily
+                delivered bundles.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- single course -->
+          <div class="col-lg-12">
+            <div class="owl-carousel active_course">
+              <div class="single_course">
+                <div class="course_head">
+                  <img class="img-fluid" src="img/worksheets/test.jpg" alt="" />
+                </div>
+                <div class="course_content">
+                  <span class="price">G6</span>
+                  <span class="tag mb-4 d-inline-block">Mathematics</span>
+                  <h4 class="mb-3">
+                    <a href="course-details.html">Percentage and Ratio</a>
+                  </h4>
+                  <p>
+                    Calculate percentage increase and decrease. Find the ratio
+                    of numbers
+                  </p>
+                  <!-- <div
+                    class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
+                  >
+                    <div class="authr_meta">
+                      <img src="img/courses/author1.png" alt="" />
+                      <span class="d-inline-block ml-2">Cameron</span>
+                    </div>
+                    <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                      <span class="meta_info"
+                        ><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span
+                      >
+                    </div>
+                  </div> -->
+                </div>
+              </div>
+              <div class="single_course">
+                <div class="course_head">
+                  <img class="img-fluid" src="img/worksheets/test.jpg" alt="" />
+                </div>
+                <div class="course_content">
+                  <span class="price">G5</span>
+                  <span class="tag mb-4 d-inline-block">English</span>
+                  <h4 class="mb-3">
+                    <a href="course-details.html">Present and Past Tense</a>
+                  </h4>
+                  <p>
+                    Examples of sentences in the present and past tenses.
+                  </p>
+                </div>
+              </div>
+              <div class="single_course">
+                <div class="course_head">
+                  <img class="img-fluid" src="img/worksheets/test.jpg" alt="" />
+                </div>
+                <div class="course_content">
+                  <span class="price">G2</span>
+                  <span class="tag mb-4 d-inline-block">Basic Science</span>
+                  <h4 class="mb-3">
+                    <a href="course-details.html">Parts of the Body</a>
+                  </h4>
+                  <p>
+                    Identifing human body parts and their functions.
+                  </p>
+                </div>
+              </div>
+              <div class="single_course">
+                <div class="course_head">
+                  <img class="img-fluid" src="img/worksheets/test.jpg" alt="" />
+                </div>
+                <div class="course_content">
+                  <span class="price">G1</span>
+                  <span class="tag mb-4 d-inline-block">Basic Science</span>
+                  <h4 class="mb-3">
+                    <a href="course-details.html">Parts of the Body</a>
+                  </h4>
+                  <p>
+                    Identifing human body parts and their functions.
+                  </p>
+                </div>
+              </div>
+              <div class="single_course">
+                <div class="course_head">
+                  <img class="img-fluid" src="img/worksheets/test.jpg" alt="" />
+                </div>
+                <div class="course_content">
+                  <span class="price">G3</span>
+                  <span class="tag mb-4 d-inline-block">Basic Science</span>
+                  <h4 class="mb-3">
+                    <a href="course-details.html">Parts of the Body</a>
+                  </h4>
+                  <p>
+                    Identifing human body parts and their functions.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================ End worksheet slides =================-->
+
+    <!--================ Start Visually Engaging Content (Videos) =================-->
+    <div class="popular_courses">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <div class="main_title">
+              <h2 class="mb-3">Visually Engaging Contents</h2>
+              <p>
+                Video leassons for visual impressions
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="wrapper">
+          <div class="row">
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+            <div class="sa-col col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+              <div class="feature-wrapper">
+                <div class="pic-wrapper">
+                  <a
+                    href="https://youtu.be/6GgcIdydbtk"
+                    class="youtube-play"
+                    data-modal="button"
+                  >
+                    <svg
+                      version="1.1"
+                      id="play"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                      x="0px"
+                      y="0px"
+                      height="100px"
+                      width="100px"
+                      viewBox="0 0 100 100"
+                      enable-background="new 0 0 100 100"
+                      xml:space="preserve"
+                    >
+                      <path
+                        class="stroke-solid"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="stroke-dotted"
+                        fill="none"
+                        stroke="white"
+                        d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+            C97.3,23.7,75.7,2.3,49.9,2.5"
+                      />
+                      <path
+                        class="icon"
+                        fill="white"
+                        d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"
+                      />
+                    </svg>
+                    <img
+                      class="feature-pic"
+                      src="img/courses/c1.jpg"
+                      width="250"
+                      height="200"
+                    />
+                  </a>
+                </div>
+                <h4 class="feature-title">Basic Science</h4>
+                <p class="feature-subtitle">
+                  Parts of the human body
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+        </div>
+      </div>
+    </div>
+    <!--================ End Visually Engaging Content (Videos) =================-->
+
+    <!--================ Start Pricing Plan =================-->
+    <div class="section_gap registration_area" id="pricing">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="main_title">
+              <h2 class="mb-3 text-white">Pricing Plans</h2>
+              <p>
+                Monthly plans and annual plans (get 10% off on annual plans)
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center d-flex align-items-center">
+          <div class="col-lg-4 col-md-6 col-sm-12 single-trainer pricing">
+            <div class="thumb d-flex justify-content-sm-center"></div>
+            <div class="meta-text text-sm-center">
+              <div class="head">
+                <h4 class="title">Basic</h4>
+              </div>
+              <div class="content">
+                <div class="price">
+                  <h5><i class="ti-crown"></i></h5>
+                </div>
+                <ul>
+                  <li>Single Grade Access (Videos and Slides)</li>
+                  <li>Access to tutor</li>
+                  <li>Monthly purchase: <strong> ₦5,000</strong></li>
+                  <li>Annual Purchase:<strong> ₦50,000</strong></li>
+                </ul>
+                <div class="sign-up">
+                  <a href="#" class="btn bordered radius">Subscribe Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 single-trainer pricing">
+            <div class="thumb d-flex justify-content-sm-center"></div>
+            <div class="meta-text text-sm-center">
+              <div class="head text-sm-center">
+                <h4 class="title">Deluxe</h4>
+              </div>
+              <div class="content">
+                <div class="price text-sm-center">
+                  <h5 class="ti-medall-alt"></h5>
+                </div>
+                <ul class="text-sm-center">
+                  <li>Unlimited Access (Videos and Slides)</li>
+                  <li>Access to tutor</li>
+                  <li>Monthly purchase: <strong> ₦20,000</strong></li>
+                  <li>Annual Purchase: <strong> ₦200,000</strong></li>
+                </ul>
+                <div class="sign-up text-sm-center">
+                  <a href="#" class="btn bordered radius">Subscribe Now</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 single-trainer pricing">
+            <div class="thumb d-flex justify-content-sm-center"></div>
+            <div class="meta-text text-sm-center">
+              <div class="head">
+                <h4 class="title">Premier</h4>
+              </div>
+              <div class="content">
+                <div class="price">
+                  <h5 class="ti-cup"></h5>
+                </div>
+                <ul>
+                  <li>Unlimited Access (Video + Slides)</li>
+                  <li>Unlimited Download (Video + Slides)</li>
+                  <li>Access to tutor</li>
+                  <li>Self Branded & Customised Lessons</li>
+                  <li>Live Sessions</li>
+                </ul>
+                <div class="sign-up">
+                  <a href="#" class="btn bordered radius">Request Quote</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================ End Pricing Plan =================-->
+
+    <!--================ Start How it works =================-->
+    <section class="trainer_area section_gap_top">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5">
+            <div class="main_title">
+              <h2 class="mb-3">How it works</h2>
+              <p>Steps to effective use of our worksheets bundles</p>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center d-flex align-items-center">
+          <div class="col-lg-10">
+            <div class="indicator">You are here &rarr;</div>
+            <div class="slide-step">
+              <div class="row">
+                <div class="col-lg-7 px-0">
+                  <img src="./img/how/step-1.JPG" class="w-100" />
+                </div>
+                <div class="col-lg-5 card px-0">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide-step">
+              <div class="row">
+                <div class="col-lg-5 card px-0">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+                <div class="col-lg-7 px-0">
+                  <img src="./img/how/step-2.JPG" class="w-100" />
+                </div>
+              </div>
+            </div>
+            <div class="slide-step">
+              <div class="row">
+                <div class="col-lg-7 px-0">
+                  <img src="./img/how/step-3.JPG" class="w-100" />
+                </div>
+                <div class="col-lg-5 card px-0">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slide-step">
+              <div class="row">
+                <div class="col-lg-5 card px-0">
+                  <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                  </div>
+                </div>
+                <div class="col-lg-7 px-0">
+                  <img src="./img/how/step-4.JPG" class="w-100" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--================ End How it works =================-->
+
+    <!--================ Start Events Area =================-->
+    <div class="events_area" id="about">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7">
+            <div class="main_title">
+              <h2 class="mb-3 text-white">
+                Created by teachers. Loved by kids.
+              </h2>
+              <p>
+                Check out our ready-to-use lessons that can be used in the
+                classroom or at home. Simply open up the lessons on your device
+                and watch your child’s confidence grow with our easy to follow
+                resources.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4">
+            <div class="single_event position-relative">
+              <div class="event_thumb">
+                <img src="img/event/e1.jpg" alt="" />
+              </div>
+              <div class="event_details">
+                <p>
+                  Students can use our lessons with minimal supervision in a
+                  simplified manner that is fun and easy to understand. Lessons
+                  are well designed with quality in mind to provide wholesome
+                  learning.
+                </p>
+                <a href="#" class="primary-btn rounded-0 mt-3">LEARN</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <div class="single_event position-relative">
+              <div class="event_thumb">
+                <img src="img/event/e2.jpg" alt="" />
+              </div>
+              <div class="event_details">
+                <p>
+                  We operate a policy of true assessment and evaluations.
+                  Students are able to chart their growth and obtain effective
+                  feedback. Lessons are provided with correction sheets.
+                </p>
+                <a href="#" class="primary-btn rounded-0 mt-3">IMPROVE</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <div class="single_event position-relative">
+              <div class="event_thumb">
+                <img src="img/event/e1.jpg" alt="" />
+              </div>
+              <div class="event_details">
+                <p>
+                  Our engaging lessons enable a child to learn at their own pace
+                  and develop confidence in what they have learnt through
+                  practical demonstrations and engagements.
+                </p>
+                <a href="#" class="primary-btn rounded-0 mt-3">PROGRESS</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================ End Events Area =================-->
+
+    <!--================ Start Testimonial Area =================-->
+    <div class="testimonial_area section_gap">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7">
+            <div class="main_title">
+              <h2 class="mb-3">Excited Parents and Kids talking</h2>
+              <p>
+                Read what excited parents and kids are saying about us!
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="testi_slider owl-carousel">
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t1.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Elite Martin</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t2.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Davil Saden</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t1.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Elite Martin</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t2.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Davil Saden</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t1.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Elite Martin</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="testi_item">
+              <div class="row">
+                <div class="col-lg-4 col-md-6">
+                  <img src="img/testimonials/t2.jpg" alt="" />
+                </div>
+                <div class="col-lg-8">
+                  <div class="testi_text">
+                    <h4>Davil Saden</h4>
+                    <p>
+                      Him, made can't called over won't there on divide there
+                      male fish beast own his day third seed sixth seas unto.
+                      Saw from
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--================ End Testimonial Area =================-->
+
+    <!--================ Start footer Area  =================-->
+    <footer class="footer-area section_gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 single-footer-widget">
+            <h4><img src="./img/logo_footer.png" alt="footer logo" /></h4>
+            <p>
+              Apexlnx has been developing young minds since 2008. We are a small
+              team of teachers and professionals focused on delivering high
+              quality education at an affordable price. Here at Apexlnx we
+              believe every child has the right to expand their learning no
+              matter what their circumstances may be...
+            </p>
+          </div>
+          <div class="col-lg-3 col-md-6 single-footer-widget text-center">
+            <h4>Navigation</h4>
+            <ul>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Payment Options</a></li>
+              <li><a href="#">FAQs</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy and Polices</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 single-footer-widget text-center">
+            <h4>Contact</h4>
+            <ul>
+              <li>N0. 30 Minna Street, Area 8, Garki, Abuja FCT</li>
+              <li><a href="tel:+2347039173237">+234 703 917 3237</a></li>
+              <li><a href="mailto:info@apexlnx.com">info@apexlnx.com</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-md-6 single-footer-widget">
+            <h4>Newsletter</h4>
+            <p>You can trust us. we only send promo offers,</p>
+            <div class="form-wrap" id="mc_embed_signup">
+              <form
+                target="_blank"
+                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                method="get"
+                class="form-inline"
+              >
+                <input
+                  class="form-control"
+                  name="EMAIL"
+                  placeholder="Your Email Address"
+                  onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Your Email Address'"
+                  required=""
+                  type="email"
+                />
+                <button class="click-btn btn btn-default">
+                  <span>subscribe</span>
+                </button>
+                <div style="position: absolute; left: -5000px;">
+                  <input
+                    name="b_36c4fd991d266f23781ded980_aefe40901a"
+                    tabindex="-1"
+                    value=""
+                    type="text"
+                  />
+                </div>
+
+                <div class="info"></div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="row footer-bottom d-flex justify-content-between">
+          <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved | This template is made with
+            <i class="ti-heart" aria-hidden="true"></i> by
+            <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+          <div class="col-lg-4 col-sm-12 footer-social">
+            <a href="#"><i class="ti-facebook"></i></a>
+            <a href="#"><i class="ti-twitter"></i></a>
+            <a href="#"><i class="ti-dribbble"></i></a>
+            <a href="#"><i class="ti-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/owl-carousel-thumb.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="js/gmaps.min.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
